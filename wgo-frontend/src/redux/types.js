@@ -1,0 +1,6 @@
+export const LOGIN_USER = 'LOGIN_USER'
+export const LOGOUT_USER = 'LOGOUT_USER'
+export const CREATE_EVENT = 'CREATE_EVENT'
+export const LOAD_EVENTS = 'LOAD_EVENTS'
+export const CURRENT_EVENTS = 'CURRENT_EVENTS'
+export const LOAD_USERS = 'LOAD_USERS'

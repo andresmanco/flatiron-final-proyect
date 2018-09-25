@@ -1,0 +1,60 @@
+.navbar {
+   margin : 0 !important;
+  }
+
+.login {
+  top: 15px;
+  left: 10%;
+  right: 10%;
+}
+
+.filter {
+  top: 15px;
+  left: 0%;
+  width: 20%;
+}
+.card {
+
+}
+
+form {
+  padding: 12px;
+  margin: 0 6px 6px;
+  width: 100%;
+}
+
+.event {
+  top: 15px;
+  left: 10%;
+  right: 10%;
+  heigth: 200px;
+  width: 100px;
+}
+
+.myMap {
+  right: 12.5%;
+  left: 12.5%;
+  position: absolute;
+  top: 15%;
+  height: 60%;
+  width: 75%;
+};
+
+/* no sirve pa un carajo*/
+ .marker {
+  background-image: url(require('./map_marker.png'));
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.mapboxgl-popup {
+  max-width: 200px;
+}
+
+.mapboxgl-popup-content {
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
