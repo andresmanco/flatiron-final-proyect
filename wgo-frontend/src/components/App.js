@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import '../App.css';
 import Login from './Login'
 import NavBar from './Navbar'
-import Map from './map'
+import MapContainer from './map'
 import Filter from './filter'
 import CreateEvent from './createEvent'
 import CreateAcc from './CreateAcc'
@@ -54,7 +54,7 @@ class App extends Component {
         <BrowserRouter>
           <React.Fragment>
             <Route path='/' render={props=><NavBar {...props} />}/>
-            <Route exact path='/map' render={props=> <Map {...props} />} />
+            <Route exact path='/map' render={props=> <MapContainer {...props} />} />
             <Route exact path='/map' render={props=> <Filter {...props} />} />
             {this.props.user ?
               <Route exact path="/create-event" render={props=> <CreateEvent {...props}/>} />
