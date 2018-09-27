@@ -40,7 +40,6 @@ form {
   width: 75%;
 };
 
-/* no sirve pa un carajo*/
  .marker {
   background-image: url(require('./map_marker.png'));
   background-size: cover;
