@@ -8,8 +8,6 @@ import CreateEvent from './createEvent'
 import CreateAcc from './CreateAcc'
 import {connect} from 'react-redux'
 import {getCurrentEvents, checkUserLoged, getActiveUsers} from '../redux/actions'
-
-
 import {BrowserRouter, Route} from 'react-router-dom'
 
 class App extends Component {
@@ -34,7 +32,6 @@ class App extends Component {
     }
   }
 
-
   componentDidMount(){
     if(localStorage.getItem('token')){
       this.props.checkUserLoged()
@@ -48,14 +45,13 @@ class App extends Component {
   }
 
   render() {
-
     return (
       <div>
         <BrowserRouter>
           <React.Fragment>
             <Route path='/' render={props=><NavBar {...props} />}/>
-            <Route exact path='/map' render={props=> <MapContainer {...props} />} />
-            <Route exact path='/map' render={props=> <Filter {...props} />} />
+            <Route exact path='/' render={props=> <MapContainer {...props} />} />
+            <Route exact path='/' render={props=> <Filter {...props} />} />
             {this.props.user ?
               <Route exact path="/create-event" render={props=> <CreateEvent {...props}/>} />
               :

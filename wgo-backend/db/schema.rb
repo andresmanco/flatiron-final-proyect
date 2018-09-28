@@ -10,7 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_09_19_172240) do
+ActiveRecord::Schema.define(version: 2018_09_28_174259) do
+
+  create_table "comments", force: :cascade do |t|
+    t.string "content"
+    t.integer "guest_id"
+    t.integer "event_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "events", force: :cascade do |t|
     t.integer "host_id"
@@ -23,17 +31,16 @@ ActiveRecord::Schema.define(version: 2018_09_19_172240) do
     t.integer "likes", default: 0
     t.integer "rating", default: 0
     t.string "location"
+    t.string "picture"
     t.boolean "active", default: true
     t.time "closing_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  create_table "reviews", force: :cascade do |t|
+  create_table "likes", force: :cascade do |t|
     t.integer "guest_id"
     t.integer "event_id"
-    t.string "comment"
-    t.date "date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

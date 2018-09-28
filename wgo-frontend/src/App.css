@@ -13,12 +13,9 @@
   left: 0%;
   width: 20%;
 }
-.card {
-
-}
 
 form {
-  padding: 12px;
+  padding: 12px 24px 12px 12px;
   margin: 0 6px 6px;
   width: 100%;
 }
@@ -56,4 +53,11 @@ form {
 .mapboxgl-popup-content {
   text-align: center;
   font-family: 'Open Sans', sans-serif;
+}
+
+.ui.modal{
+  overflow-y: scroll;
+  top: 5%;
+  bottom: 5%;
+  max-height: 100%;
 }

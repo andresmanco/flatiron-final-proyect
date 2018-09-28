@@ -1,5 +1,8 @@
 import {combineReducers} from 'redux';
-import { CURRENT_EVENTS, LOGOUT_USER, LOGIN_USER, CREATE_EVENT, LOAD_USERS } from './types';
+import {
+   LOGOUT_USER, LOGIN_USER, LOAD_USERS,
+   CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT
+ } from './types';
 
 
 const userReducer = (state= {current: null, active: []}, action)=>{
@@ -19,13 +22,22 @@ const userReducer = (state= {current: null, active: []}, action)=>{
 }
 
 
-const eventReducer = (state = [], action)=>{
+const eventReducer = (state= {all: [], filter: [], selected: null}, action)=>{
   switch (action.type) {
     case CREATE_EVENT:
-      return [...state, action.event]
+      return {...state, all: [...state.all, action.event]}
 
     case CURRENT_EVENTS:
-      return action.events
+      return {...state, all: action.events}
+
+    case EVENT_FILTER:
+      return {...state, filter: action.events}
+
+    case SELECT_EVENT:
+      return {...state, selected: action.event}
+
+    case UNSELECT_EVENT:
+      return {...state, selected: null}
 
     default:
       return state

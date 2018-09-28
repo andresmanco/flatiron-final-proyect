@@ -1,6 +1,8 @@
+import React, {Component, Fragment} from 'react';
+import ReactMapboxGl, { Marker, Cluster } from 'react-mapbox-gl';
+import EventDetail from './EventDetail'
 import {connect} from 'react-redux'
-import React, {Component} from 'react';
-import ReactMapboxGl, { Marker, Cluster, Popup } from 'react-mapbox-gl';
+import {selectEvent} from '../redux/actions'
 
 
 const Map = ReactMapboxGl({
@@ -32,23 +34,20 @@ const markerStyle= {
   }
 
 
-// const StyledPopup = {
-//   background: 'white',
-//   color: '#3f618c',
-//   'font-weight': 400,
-//   padding: '5px',
-//   'border-radius': '2px'
-// }
-
-
 class MapContainer extends Component{
   state={
-    center: [-96, 37.8]
+    center: [-96, 37.8],
+    zoom: [4]
   }
 
   geojson=()=>{
+    let workingEvents = this.props.events
+    if (this.props.filterEvents.length > 0 && this.props.filterEvents[0] !== 'empty'){
 
-    let geo = this.props.events.map(event=>{
+      workingEvents = this.props.filterEvents
+    }
+
+    let geo = workingEvents.map(event=>{
       return(
         {
           id: event.id,
@@ -60,6 +59,7 @@ class MapContainer extends Component{
           properties: {
             title: event.title,
             description: event.description,
+            picture: event.picture,
             type: event.event_type,
             dressCode: event.dress_code,
             openTo: event.open_to,
@@ -84,23 +84,22 @@ class MapContainer extends Component{
     </Marker>
   )
 
-  handleClick= feature=> (
-      <Popup offset={[0, -50]} coordinates={feature.geometry.coordinates}>
-
-            {feature.properties.title}
-
-      </Popup>
-  )
-
-
+  handleClick= feature=>{
+    this.props.selectEvent(feature)
+    this.setState({
+      center: feature.geometry.coordinates,
+      zoom: [8]
+    })
+  }
 
   render(){
+
     return(
-      <React.Fragment>
+      <Fragment>
         <Map
-        style='mapbox://styles/mapbox/streets-v10'
+        style={'mapbox://styles/mapbox/streets-v10'}
         center= {this.state.center}
-        zoom= {[10]}
+        zoom= {this.state.zoom}
         className='myMap'
         containerStyle={{
           height: "60vh",
@@ -115,7 +114,6 @@ class MapContainer extends Component{
               coordinates={feature.geometry.coordinates}
               data-feature={feature}
               onClick={()=>this.handleClick(feature)}
-              data-set={feature}
             >
               <div data-set={feature} title={feature.properties.title}>
                 {feature.properties.type[0]}
@@ -124,7 +122,10 @@ class MapContainer extends Component{
           ))}
         </Cluster>
         </Map>
-      </React.Fragment>
+        {this.props.currentEvent !== null ?
+        <EventDetail />
+        : null }
+      </Fragment>
     )
   }
 
@@ -132,9 +133,11 @@ class MapContainer extends Component{
 
 const mapStateToPros= state=>{
   return {
-    events: state.events,
-    users: state.user.all
+    events: state.events.all,
+    filterEvents: state.events.filter,
+    users: state.user.all,
+    currentEvent: state.events.selected
   }
 }
 
-export default connect(mapStateToPros)(MapContainer)
+export default connect(mapStateToPros, {selectEvent})(MapContainer)

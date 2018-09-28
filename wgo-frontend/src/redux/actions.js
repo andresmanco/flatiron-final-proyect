@@ -1,4 +1,7 @@
-import { CURRENT_EVENTS, LOGOUT_USER, LOGIN_USER, CREATE_EVENT, LOAD_USERS } from './types'
+import {
+  LOGOUT_USER, LOGIN_USER, LOAD_USERS,
+  CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT
+ } from './types'
 
 const baseUrl = "http://localhost:3001"
 
@@ -105,4 +108,17 @@ export function getActiveUsers(){
       dispatch({type: LOAD_USERS, users})
     })
   }
+}
+
+
+export function filterEvents(events) {
+  return {type: EVENT_FILTER, events}
+}
+
+export function selectEvent(event){
+  return {type: SELECT_EVENT, event}
+}
+
+export function unselectEvent(){
+  return {type: UNSELECT_EVENT}
 }

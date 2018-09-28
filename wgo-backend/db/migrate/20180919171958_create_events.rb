@@ -11,6 +11,7 @@ class CreateEvents < ActiveRecord::Migration[5.2]
       t.integer :likes, default: 0
       t.integer :rating, default: 0
       t.string :location
+      t.string :picture
       t.boolean :active, default: true
       t.time :closing_time
       t.timestamps

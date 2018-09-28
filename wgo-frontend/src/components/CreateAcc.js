@@ -55,8 +55,7 @@ class CreateAcc extends Component {
 
   render(){
     return(
-      <div className='ui card login' style={{padding: '12px',
-        margin: '0 6px 6px'}}>
+      <div className='ui card login'>
         <Form onSubmit={(e)=> this.handleSubmit(e)}>
           <Form.Field>
             <h1 style={{textAlign: 'center'}}> WGO </h1>

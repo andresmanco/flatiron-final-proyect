@@ -3,50 +3,14 @@ import { Button, Checkbox, Form } from 'semantic-ui-react'
 import { TimeInput } from 'semantic-ui-calendar-react';
 import {fetchNewEvent} from '../redux/actions'
 import {connect} from 'react-redux'
-
-const eventType = [
-  {text: 'All', value: 'All'},
-  {text: 'Artistic', value: 'Artistic'},
-  {text: 'Games', value: 'Game'},
-  {text: 'Concert', value: 'Concert'},
-  {text: 'Fair', value: 'Fair'},
-  {text: 'Farmers Market', value: 'Farmers Market'},
-  {text: 'Garage Sale', value: 'Garage Sale'},
-  {text: 'Party', value: 'Party'},
-  {text: 'Street Performance', value: 'Street Performance'},
-  {text: 'Sport', value: 'Sport'},
-  {text: 'Other', value: 'Other'}
-]
-const dressCode = [
-  {text: 'None', value: 'None'},
-  {text: 'Casual', value: 'Casual'},
-  {text: 'Formal', value: 'Formal'},
-  {text: 'Semi Formal', value: 'Semi-formal'},
-  {text: 'Black Tie', value: 'Black-tie'},
-  {text: 'Swim Suit', value: 'Swim Suite'}
-]
-
-const openTo = [
-  {text: 'All public', value: 'public'},
-  {text: 'All my friends', value: 'friends'},
-  {text: 'Pick your friends', value: 'pick'},
-  {text: '18+', value: '18+'},
-  {text: '21+', value: '21+'},
-  {text: '25+', value: '25+'},
-  {text: 'Families', value: 'Families'}
-]
-
-const price = [
-  {text: 'Free', value: 'Free'},
-  {text: 'Accept Donations', value: 'Donation'},
-  {text: 'Select Amount', value: 'Amount'},
-]
+import {eventType, openTo, price, dressCode} from './EventConstants'
 
 
 class CreateEvent extends Component{
   state={
     title: '',
     description: '',
+    picture: '',
     eventType: '',
     dressCode: '',
     price: '',
@@ -66,6 +30,7 @@ class CreateEvent extends Component{
     this.setState({
     title: '',
     description: '',
+    picture: '',
     eventType: '',
     dressCode: '',
     price: '',
@@ -104,6 +69,9 @@ class CreateEvent extends Component{
         <p style={{textAlign: 'center'}}>Create your own event!<br/>What are you about to do?</p>
         <Form.Field>
           <input onChange={this.handleChange} value={this.state.title} name='title' label='Title' placeholder='Title' />
+        </Form.Field>
+        <Form.Field>
+          <input onChange={this.handleChange} value={this.state.picture} name='picture' label='Picture' placeholder='Picture URL' />
         </Form.Field>
         <Form.Field>
           <Form.TextArea onChange={this.handleChange} value={this.state.description} label='Description' name='description' placeholder='Tell us more about your the event...' />
