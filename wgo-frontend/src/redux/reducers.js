@@ -1,8 +1,13 @@
 import {combineReducers} from 'redux';
-import { CURRENT_EVENTS, LOGOUT_USER, LOGIN_USER, CREATE_EVENT, LOAD_USERS } from './types';
+import {
+   LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
+   CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
+   ADD_COMMENT,
+   ADD_LIKE, DELETE_LIKE
+ } from './types';
 
 
-const userReducer = (state= {current: null, active: []}, action)=>{
+const userReducer = (state= {current: null, active: [], all: []}, action)=>{
   switch (action.type) {
     case LOGIN_USER:
       return {...state, current: action.user}
@@ -13,19 +18,63 @@ const userReducer = (state= {current: null, active: []}, action)=>{
     case LOAD_USERS:
       return {...state, active: action.users}
 
+    case GET_USERS:
+    return { ...state, all: action.users}
+
     default:
       return state
   }
 }
 
 
-const eventReducer = (state = [], action)=>{
+const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected:[], likesOfSelected:[]}, action)=>{
   switch (action.type) {
     case CREATE_EVENT:
-      return [...state, action.event]
+      return {...state, all: [...state.all, action.event]}
 
     case CURRENT_EVENTS:
-      return action.events
+      return {...state, all: action.events}
+
+    case EVENT_FILTER:
+      return {...state, filter: action.events}
+
+    case SELECT_EVENT:
+      let selected = state.all.find(event=> event.id === action.id)
+      return {...state, selected, commentsOfSelected: selected.comments, likesOfSelected: selected.likes}
+
+    case UNSELECT_EVENT:
+      return {...state, selected: null}
+
+    case ADD_COMMENT:
+      let current = null
+      let allE = state.all.map(event=>{
+        if(event.id === state.selected.id){
+          event.comments=[...event.comments, action.comment]
+          current = event
+        }
+        return event
+      })
+      return {...state, all: allE, selected: current, commentsOfSelected: current.comments}
+
+    case ADD_LIKE:
+      allE = state.all.map(event=>{
+        if(event.id === state.selected.id){
+          event.likes=[...event.likes, action.like]
+          current = event
+        }
+          return event
+      })
+      return {...state, all: allE, selected: current, likesOfSelected: current.likes}
+
+    case DELETE_LIKE:
+      allE = state.all.map(event=>{
+        if(event.id === state.selected.id){
+          event.likes= event.likes.filter(like=> like.id !== action.id)
+          current = event
+        }
+          return event
+      })
+    return {...state, all: allE, selected: current, likesOfSelected: current.likes}
 
     default:
       return state

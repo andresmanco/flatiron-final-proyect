@@ -1,20 +1,57 @@
-import React, {Component} from 'react'
+import React, {Component, Fragment} from 'react';
+import ReactMapboxGl, { Marker, Cluster } from 'react-mapbox-gl';
+import EventDetail from './EventDetail'
 import {connect} from 'react-redux'
-import { Button } from 'semantic-ui-react'
+import {selectEvent} from '../redux/actions'
 
-var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
-var myMap
 
-class Map extends Component{
+const Map = ReactMapboxGl({
+  accessToken: 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA'
+});
+
+const clusterMarkerStyle= {
+    width: 30,
+    height: 30,
+    borderRadius: '50%',
+    backgroundColor: '#51D5A0',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    color: 'white',
+    border: '2px solid #56C498',
+    cursor: 'pointer'
+  }
+
+const markerStyle= {
+    width: 30,
+    height: 30,
+    borderRadius: '50%',
+    backgroundColor: '#E0E0E0',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    border: '2px solid #C9C9C9'
+  }
+
+
+class MapContainer extends Component{
   state={
-    select: false
+    center: [-96, 37.8],
+    zoom: [4]
   }
 
   geojson=()=>{
-    return this.props.events.map(event=>{
+    let workingEvents = this.props.events
+    if (this.props.filterEvents.length > 0 && this.props.filterEvents[0] !== 'empty'){
+
+      workingEvents = this.props.filterEvents
+    }
+
+    let geo = workingEvents.map(event=>{
 
       return(
         {
+          id: event.id,
           type: 'Feature',
           geometry: {
             type: 'Point',
@@ -23,6 +60,7 @@ class Map extends Component{
           properties: {
             title: event.title,
             description: event.description,
+            picture: event.picture,
             type: event.event_type,
             dressCode: event.dress_code,
             openTo: event.open_to,
@@ -34,72 +72,74 @@ class Map extends Component{
         }
       )
     })
-  }
-
-
-  setMap= ()=>{
-    mapboxgl.accessToken = 'pk.eyJ1IjoiYW5kcmVzbWFuY28iLCJhIjoiY2prd29qMWxjMDAxZzNwcWhyc2w5c2U0ZSJ9.BB30P0oz6N6FHfryWck6Hg';
-    myMap = new mapboxgl.Map({
-      container: 'eventMap',
-      style: 'mapbox://styles/mapbox/streets-v10',
-      center: [-96, 37.8],
-      zoom: 10
-    });
-    myMap.addControl(new mapboxgl.GeolocateControl({
-      positionOptions: {
-        enableHighAccuracy: true
-      },
-      trackUserLocation: true
-    }))
-  }
-
-  componentDidUpdate = ()=>{
-    this.geojson().forEach(marker=> {
-    var el = <div classNme='marker'></div>
-
-    new mapboxgl.Marker(el)
-    .setLngLat(marker.geometry.coordinates)
-    .setPopup(new mapboxgl.Popup({ offset: 25 })
-      .setHTML(
-        `<h3>
-          ${marker.properties.title}
-        </h3>
-        <p>
-          ${marker.properties.description }
-        </p>`
-    ))
-    .addTo(myMap);
-  });
-  }
-
-    handleClick = ()=> {
-      debugger
-    console.log('hola')
-
+    return {type: "FeatureCollection", features: geo}
   }
 
   componentDidMount=()=>{
-    this.setMap()
-    navigator.geolocation.getCurrentPosition(p=>myMap.jumpTo({center: [p.coords.longitude, p.coords.latitude]}))
+    navigator.geolocation.getCurrentPosition(p=> this.setState({center: [p.coords.longitude, p.coords.latitude]}))
+  }
+
+  clusterMarker = (coordinates, pointCount) => (
+    <Marker coordinates={coordinates} key={coordinates.toString()} style={clusterMarkerStyle}>
+      <div>{pointCount}</div>
+    </Marker>
+  )
+
+  handleClick= feature=>{
+    this.props.selectEvent(feature.id)
+    this.setState({
+      center: feature.geometry.coordinates,
+      zoom: [8]
+    })
   }
 
   render(){
+
     return(
-      <React.Fragment>
-      <div className='myMap' id='eventMap'></div>
-     {this.state.select ?
-     <Button>DETAILS</Button>
-   : null}
-      </React.Fragment>
+      <Fragment>
+        <h4 style={{textAlign: 'center'}}>Track events all over the world in real time</h4>
+        <Map
+        style={'mapbox://styles/mapbox/streets-v10'}
+        center= {this.state.center}
+        zoom= {this.state.zoom}
+        className='myMap'
+        containerStyle={{
+          height: "60vh",
+          width: "75vw",
+        }}>
+
+        <Cluster ClusterMarkerFactory={this.clusterMarker}>
+          {this.geojson().features.map(feature => (
+            <Marker
+              key={feature.id}
+              style={markerStyle}
+              coordinates={feature.geometry.coordinates}
+              data-feature={feature}
+              onClick={()=>this.handleClick(feature)}
+            >
+              <div data-set={feature} title={feature.properties.title}>
+                {feature.properties.type[0]}
+              </div>
+            </Marker>
+          ))}
+        </Cluster>
+        </Map>
+        {this.props.currentEvent !== null ?
+        <EventDetail />
+        : null }
+      </Fragment>
     )
   }
+
 }
 
 const mapStateToPros= state=>{
   return {
-    events: state.events,
-    users: state.user.all
+    events: state.events.all,
+    filterEvents: state.events.filter,
+    users: state.user.all,
+    currentEvent: state.events.selected
   }
 }
 
-export default connect(mapStateToPros)(Map)
+export default connect(mapStateToPros, {selectEvent})(MapContainer)
