@@ -1,7 +1,9 @@
 import {combineReducers} from 'redux';
 import {
    LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
-   CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT, ADD_COMMENT, ADD_LIKE
+   CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
+   ADD_COMMENT,
+   ADD_LIKE, DELETE_LIKE
  } from './types';
 
 
@@ -63,6 +65,16 @@ const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected
           return event
       })
       return {...state, all: allE, selected: current, likesOfSelected: current.likes}
+
+    case DELETE_LIKE:
+      allE = state.all.map(event=>{
+        if(event.id === state.selected.id){
+          event.likes= event.likes.filter(like=> like.id !== action.id)
+          current = event
+        }
+          return event
+      })
+    return {...state, all: allE, selected: current, likesOfSelected: current.likes}
 
     default:
       return state

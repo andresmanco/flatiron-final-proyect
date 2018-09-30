@@ -23,7 +23,8 @@ class EventDetail extends Component{
 
   handleClick=()=>{
     if(this.state.likeButton){
-      this.props.fetchDeleteLike(this.props.currentEvent.id)
+      let id = this.props.likes.find(like=> like.guest_id === this.props.currentUser.id).id
+      this.props.fetchDeleteLike(id)
     }else{
       this.props.fetchNewLike(this.props.currentEvent.id)
     }
@@ -75,7 +76,7 @@ class EventDetail extends Component{
         </Modal.Content>
             {this.state.likeButton ?
               <div style={{textAlign:'center'}} >
-                <Button color='red'>
+                <Button onClick={this.handleClick} color='red'>
                   <Icon name='heart outline' />
                 </Button>
                 <Label as='a' basic color='red' pointing='left'>

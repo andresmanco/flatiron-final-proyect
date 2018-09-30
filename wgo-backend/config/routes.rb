@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 
   resources :users, only: [:index, :create]
   resources :events, only: [:index, :create]
-  resources :likes, only: [:index, :create]
-  resources :comments, only: [:index, :create]
-  
+  resources :likes, only: [:index, :create, :destroy]
+  resources :comments, only: [:index, :create, :destroy]
+
 
   post '/login', to: 'auth#login'
   get '/account', to: 'users#show'

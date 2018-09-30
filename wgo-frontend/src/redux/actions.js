@@ -1,6 +1,8 @@
 import {
   LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
-  CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT, ADD_COMMENT, ADD_LIKE
+  CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
+  ADD_COMMENT,
+  ADD_LIKE, DELETE_LIKE
  } from './types'
 
 const baseUrl = "http://localhost:3001"
@@ -180,21 +182,15 @@ export function fetchNewLike(eventId) {
 
 export function fetchDeleteLike(likeId){
   return function(dispatch){
-    fetch(baseUrl + '/likes', {
+    fetch(baseUrl + '/likes/' + likeId, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
         "Content-Type": "application/json",
         Accept: "application/json"
-      },
-      body: JSON.stringify({
-        event_id: eventId
-      })
-    }).then(r=> r.json())
-    .then(like=>{
-      if(like!== undefined){
-        dispatch({type: ADD_LIKE, like})
       }
+    }).then(()=>{
+      dispatch({type: DELETE_LIKE, id: likeId})
     })
   }
 }
