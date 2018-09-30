@@ -6,12 +6,10 @@ class LikesController < ApplicationController
   end
 
   def create
-    render json: Like.create(event_id: params[:eventId], guest_id: my_current_user.id)
+    render json: Like.create(event_id: params[:event_id], guest_id: my_current_user.id)
   end
 
-  private
-
-  def review_params
-    params.require(:like).permit(:guest_id, :event_id)
+  def destroy
+    render json: Like.find(params[:id]).destroy
   end
 end

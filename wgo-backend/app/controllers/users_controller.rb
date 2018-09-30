@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: {username: my_current_user.username, fullname: my_current_user.fullname}
+    render json: {username: my_current_user.username, fullname: my_current_user.fullname, id: my_current_user.id}
   end
 
   def create

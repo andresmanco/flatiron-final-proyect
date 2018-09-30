@@ -7,7 +7,7 @@ import Filter from './filter'
 import CreateEvent from './createEvent'
 import CreateAcc from './CreateAcc'
 import {connect} from 'react-redux'
-import {getCurrentEvents, checkUserLoged, getActiveUsers} from '../redux/actions'
+import {getCurrentEvents, checkUserLoged, getActiveUsers, getAllUsers} from '../redux/actions'
 import {BrowserRouter, Route} from 'react-router-dom'
 
 class App extends Component {
@@ -33,6 +33,7 @@ class App extends Component {
   }
 
   componentDidMount(){
+    this.props.getAllUsers()
     if(localStorage.getItem('token')){
       this.props.checkUserLoged()
     }
@@ -71,4 +72,4 @@ const mapStateToPros= state=>{
   return {user: state.user.current}
 }
 
-export default connect(mapStateToPros, {getCurrentEvents ,checkUserLoged, getActiveUsers})(App);
+export default connect(mapStateToPros, {getCurrentEvents ,checkUserLoged, getActiveUsers, getAllUsers})(App);

@@ -48,6 +48,7 @@ class MapContainer extends Component{
     }
 
     let geo = workingEvents.map(event=>{
+
       return(
         {
           id: event.id,
@@ -85,7 +86,7 @@ class MapContainer extends Component{
   )
 
   handleClick= feature=>{
-    this.props.selectEvent(feature)
+    this.props.selectEvent(feature.id)
     this.setState({
       center: feature.geometry.coordinates,
       zoom: [8]
@@ -96,6 +97,7 @@ class MapContainer extends Component{
 
     return(
       <Fragment>
+        <h4 style={{textAlign: 'center'}}>Track events all over the world in real time</h4>
         <Map
         style={'mapbox://styles/mapbox/streets-v10'}
         center= {this.state.center}

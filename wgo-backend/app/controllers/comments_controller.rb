@@ -6,12 +6,6 @@ class CommentsController < ApplicationController
   end
 
   def create
-    render json: Comment.create(content: params[:content], event_id: params[:eventId], guest_id: my_current_user.id)
-  end
-
-  private
-
-  def review_params
-    params.require(:comment).permit(:guest_id, :event_id, :content)
+    render json: Comment.create(content: params[:content], event_id: params[:event_id], guest_id: my_current_user.id)
   end
 end

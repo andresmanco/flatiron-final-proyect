@@ -51,7 +51,6 @@ form {
 }
 
 .mapboxgl-popup-content {
-  text-align: center;
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -60,4 +59,8 @@ form {
   top: 5%;
   bottom: 5%;
   max-height: 100%;
+}
+
+.ui.button {
+  padding: 6px 6px 6px 6px;
 }

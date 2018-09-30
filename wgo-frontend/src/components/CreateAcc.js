@@ -59,7 +59,7 @@ class CreateAcc extends Component {
         <Form onSubmit={(e)=> this.handleSubmit(e)}>
           <Form.Field>
             <h1 style={{textAlign: 'center'}}> WGO </h1>
-            <p style={{textAlign: 'center'}}>Sign up to see and create events all over the wotld in real time</p>
+            <p style={{textAlign: 'center'}}>Sign up to see and create events all over the world in real time</p>
             <input value={this.state.fullname} onChange={this.handleChange} name='fullname' placeholder='Full Name' />
           </Form.Field>
           <Form.Field>
