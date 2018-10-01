@@ -33,7 +33,9 @@ class CreateAcc extends Component {
   handleSubmit=e=>{
     e.preventDefault()
     this.createNewAcc()
-    .then(()=> this.props.loginUser({username: this.state.username, password: this.state.password}))
+    .then(r=> {
+      this.props.loginUser({username: this.state.username, password: this.state.password})
+    })
     .then(()=>{
       this.setState({
         fullname: '',
