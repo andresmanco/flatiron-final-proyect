@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import { Image, Modal, Button, Header, Icon, Label} from 'semantic-ui-react'
+import { Image, Modal, Button, Icon, Label} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 import {unselectEvent, fetchNewLike, fetchDeleteLike} from '../redux/actions'
 import CommentsContainer from './CommentsContainer'

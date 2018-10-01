@@ -1,8 +1,8 @@
 import {combineReducers} from 'redux';
 import {
    LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
-   CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
-   ADD_COMMENT,
+   CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT, USER_EVENT,
+   ADD_COMMENT, DELETE_COMMENT,
    ADD_LIKE, DELETE_LIKE
  } from './types';
 
@@ -31,7 +31,7 @@ const userReducer = (state= {current: null, active: [], all: []}, action)=>{
 }
 
 
-const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected:[], likesOfSelected:[]}, action)=>{
+const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected:[], likesOfSelected:[], userEvent:null}, action)=>{
   switch (action.type) {
     case CREATE_EVENT:
       return {...state, all: [...state.all, action.event]}
@@ -60,6 +60,16 @@ const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected
       })
       return {...state, all: allE, selected: current, commentsOfSelected: current.comments}
 
+    case DELETE_COMMENT:
+      allE = state.all.map(event=>{
+        if(event.id === state.selected.id){
+          event.comments = event.comments.filter(comment=> comment.id !== action.id)
+          current = event
+        }
+        return event
+      })
+      return {...state, all: allE, selected: current, commentsOfSelected: current.comments}
+
     case ADD_LIKE:
       allE = state.all.map(event=>{
         if(event.id === state.selected.id){
@@ -73,12 +83,15 @@ const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected
     case DELETE_LIKE:
       allE = state.all.map(event=>{
         if(event.id === state.selected.id){
-          event.likes= event.likes.filter(like=> like.id !== action.id)
+          event.likes = event.likes.filter(like=> like.id !== action.id)
           current = event
         }
           return event
       })
     return {...state, all: allE, selected: current, likesOfSelected: current.likes}
+
+    case USER_EVENT:
+      return {...state, userEvent: action.event}
 
     default:
       return state

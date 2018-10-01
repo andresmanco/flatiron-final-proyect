@@ -1,7 +1,7 @@
 import {
   LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
-  CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
-  ADD_COMMENT,
+  CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT, USER_EVENT,
+  ADD_COMMENT, DELETE_COMMENT,
   ADD_LIKE, DELETE_LIKE
  } from './types'
 
@@ -154,6 +154,21 @@ export function fetchNewComment(comment, eventId) {
       if(comment!== undefined){
         dispatch({type: ADD_COMMENT, comment})
       }
+    })
+  }
+}
+
+export function fetchDeleteComment(commentId){
+  return function(dispatch){
+    fetch(baseUrl + '/comments/' + commentId, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+        "Content-Type": "application/json",
+        Accept: "application/json"
+      }
+    }).then(()=>{
+      dispatch({type: DELETE_COMMENT, id: commentId})
     })
   }
 }

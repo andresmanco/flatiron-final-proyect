@@ -97,9 +97,9 @@ class MapContainer extends Component{
 
     return(
       <Fragment>
-        <h4 style={{textAlign: 'center'}}>Track events all over the world in real time</h4>
+        <h4 style={{textAlign: 'center', margin: '50px 0px 20px 0px'}}>Track events all over the world in real time</h4>
         <Map
-        style={'mapbox://styles/mapbox/streets-v10'}
+        style='mapbox://styles/mapbox/streets-v10'
         center= {this.state.center}
         zoom= {this.state.zoom}
         className='myMap'

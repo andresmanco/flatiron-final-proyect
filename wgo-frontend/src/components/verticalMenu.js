@@ -52,26 +52,19 @@ class VerticalMenu extends Component {
         >
         {this.props.user ? (
           <NavLink activeClassName="ui active item" className="ui item" exact to="/create-event">
-            <Menu.Item as='a'>
-              Create your event
-            </Menu.Item>
+            <Menu.Item as='a'>Create your event</Menu.Item>
           </NavLink>
           <Button className="ui item" onClick={this.clickHandler}>
-            <Menu.Item as='a'>
-              Logout
-            </Menu.Item>
+            <Menu.Item as='button'>Logout</Menu.Item>
           </Button>
           ) : (
           <NavLink exact to="/signup" className="ui item" activeClassName="ui active item">
-            <Menu.Item as='a'>
-              SignUp
-            </Menu.Item>
+            <Menu.Item as='a'>SignUp</Menu.Item>
           </NavLink>
           <NavLink exact to="/login" className="ui item" activeClassName="ui active item">
-            <Menu.Item as='a'>
-              Login
-            </Menu.Item>
+            <Menu.Item as='a'>Login</Menu.Item>
           </NavLink>
+        )
         </Sidebar>
         <Sidebar.Pusher dimmed={visible}>
             <Segment basic>
@@ -81,7 +74,7 @@ class VerticalMenu extends Component {
           </Sidebar.Pusher>
       </Sidebar.Pushable>
     </div>
-      )}
+      }
     )
   }
 }

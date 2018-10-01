@@ -2,7 +2,7 @@ import React, {Component, Fragment} from 'react'
 import { Comment, Header, Form, Button } from 'semantic-ui-react'
 import EventComment from './EventComment'
 import {connect} from 'react-redux'
-import {fetchNewComment} from '../redux/actions'
+import {fetchNewComment, fetchDeleteComment} from '../redux/actions'
 
 
 class CommentsContainer extends Component{
@@ -17,6 +17,7 @@ class CommentsContainer extends Component{
   }
 
   handleChange= (e)=>{
+    this.handleClick()
     if(this.props.currentUser){
       this.setState({
         comment: e.target.value
@@ -27,8 +28,6 @@ class CommentsContainer extends Component{
           this.setState({disabled: false})
         }
       })
-
-
     }else{
       alert('You need to Log in to like or comment on events')
     }
@@ -45,8 +44,19 @@ class CommentsContainer extends Component{
     }
   }
 
+  displayComments=()=>{
+    return this.props.comments.map(comment=>{
+      if(this.props.currentUser && comment.guest_id === this.props.currentUser.id){
+        return <EventComment deleteComment={this.props.fetchDeleteComment} key={comment.id} comment={comment}/>
+      }else{
+        return <EventComment key={comment.id} comment={comment}/>
+      }
+    })
+  }
+
 
   render(){
+
     const {currentEvent}= this.props
     return(
       <Fragment>
@@ -62,7 +72,7 @@ class CommentsContainer extends Component{
               <span onClick={this.handleClick}>Look at all the comments</span>
             </Comment.Metadata>
             {this.state.show ?
-              this.props.comments.map(comment=><EventComment key={comment.id} comment={comment}/>)
+              this.displayComments()
           : null}
           </Comment.Content>
         </Comment>
@@ -84,4 +94,4 @@ const mapStateToProps= state=>{
   }
 }
 
-export default connect(mapStateToProps, {fetchNewComment})(CommentsContainer)
+export default connect(mapStateToProps, {fetchNewComment, fetchDeleteComment})(CommentsContainer)
