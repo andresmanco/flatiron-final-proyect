@@ -1,5 +1,5 @@
 import React from 'react'
-import {Comment} from 'semantic-ui-react'
+import {Comment, Icon} from 'semantic-ui-react'
 import {connect} from 'react-redux'
 
 const EventComment = props =>{
@@ -25,6 +25,9 @@ const EventComment = props =>{
         <Comment.Text>
           {props.comment.content}
         </Comment.Text>
+        {props.deleteComment ?
+          <Icon name="trash" onClick={()=>props.deleteComment(props.comment.id)}/>
+        :null}
       </Comment.Content>
     </Comment>
   )

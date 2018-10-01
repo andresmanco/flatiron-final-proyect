@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import { TimeInput } from 'semantic-ui-calendar-react';
 import {fetchNewEvent} from '../redux/actions'
 import {connect} from 'react-redux'
@@ -87,9 +87,9 @@ class CreateEvent extends Component{
             </Form.Field>
             : null
           }
-          </Form.Group>
-        <TimeInput name="closingTime" placeholder="Ending time" value={this.state.closingTime} label='Closing Time' iconPosition="left" onChange={this.handleChangeTime} />
-      <Button type='submit'>Submit</Button>
+          <TimeInput name="closingTime" placeholder="Ending time" value={this.state.closingTime} label='Closing Time' iconPosition="left" onChange={this.handleChangeTime} />
+          <Button type='submit'>Submit</Button>
+        </Form.Group>
       </Form>
     </div>
     )

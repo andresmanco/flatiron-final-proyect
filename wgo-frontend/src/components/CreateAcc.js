@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Button, Checkbox, Form } from 'semantic-ui-react'
+import { Button, Form } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import { loginUser } from '../redux/actions'
 
@@ -76,9 +76,7 @@ class CreateAcc extends Component {
           <Form.Field>
             <input value={this.state.password} onChange={this.handleChange} name='password' placeholder='Password' />
           </Form.Field>
-          <Form.Field>
-            <Checkbox label='I agree to the Terms and Conditions' />
-          </Form.Field>
+          
           <Button type='submit'>Submit</Button>
         </Form>
       </div>
