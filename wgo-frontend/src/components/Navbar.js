@@ -31,7 +31,7 @@ const NavBar = props =>{
 
   return (
 
-    <div className={`ui inverted green menu navbar`}>
+    <div className={`ui inverted green menu fixed navbar`}>
       <NavLink activeClassName="ui active item" className="ui item" exact to="/">
         <h3 className="ui header">
           <Icon color='orange' name='map outline' />
