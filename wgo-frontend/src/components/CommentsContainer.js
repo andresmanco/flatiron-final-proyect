@@ -38,7 +38,8 @@ class CommentsContainer extends Component{
     if(this.props.currentUser){
       e.preventDefault();
       this.props.fetchNewComment(this.state.comment, this.props.currentEvent.id)
-      this.setState({comment: ''})
+      this.setState({comment: '', disabled: true})
+
     }else{
       alert('You need to Log in to like or comment on events')
     }
