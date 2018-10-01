@@ -10,7 +10,11 @@ import {
 const userReducer = (state= {current: null, active: [], all: []}, action)=>{
   switch (action.type) {
     case LOGIN_USER:
-      return {...state, current: action.user}
+      if(state.all.includes(action.user)){
+        return {...state, current: action.user}
+      }else{
+        return {...state, current: action.user, all: [...state.all, action.user]}
+      }
 
     case LOGOUT_USER:
       return {...state, current: action.user}
