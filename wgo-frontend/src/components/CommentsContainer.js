@@ -8,7 +8,8 @@ import {fetchNewComment} from '../redux/actions'
 class CommentsContainer extends Component{
   state={
     comment: '',
-    show: false
+    show: false,
+    disabled: true
   }
 
   handleClick= ()=>{
@@ -16,20 +17,36 @@ class CommentsContainer extends Component{
   }
 
   handleChange= (e)=>{
-    this.setState({
-      [e.target.name]: e.target.value
-    })
+    if(this.props.currentUser){
+      this.setState({
+        comment: e.target.value
+      }, ()=>{
+        if(this.state.comment === ''){
+          this.setState({disabled: true})
+        }else {
+          this.setState({disabled: false})
+        }
+      })
+
+
+    }else{
+      alert('You need to Log in to like or comment on events')
+    }
   }
 
   handleSubmit =(e)=> {
-    e.preventDefault();
-    this.props.fetchNewComment(this.state.comment, this.props.currentEvent.id)
-    this.setState({comment: ''})
+    if(this.props.currentUser){
+      e.preventDefault();
+      this.props.fetchNewComment(this.state.comment, this.props.currentEvent.id)
+      this.setState({comment: '', disabled: true})
+
+    }else{
+      alert('You need to Log in to like or comment on events')
+    }
   }
 
 
   render(){
-
     const {currentEvent}= this.props
     return(
       <Fragment>
@@ -51,7 +68,7 @@ class CommentsContainer extends Component{
         </Comment>
         <Form reply onSubmit={this.handleSubmit}>
           <Form.TextArea onChange={this.handleChange} value={this.state.comment} name='comment' placeholder='Write a comment' />
-          <Button content='Submit' labelPosition='left' icon='edit' primary />
+          <Button disabled={this.state.disabled} content='Submit' labelPosition='left' icon='edit' primary />
         </Form>
       </Comment.Group>
       </Fragment>
@@ -62,7 +79,8 @@ class CommentsContainer extends Component{
 const mapStateToProps= state=>{
   return {
     currentEvent: state.events.selected,
-    comments: state.events.commentsOfSelected
+    comments: state.events.commentsOfSelected,
+    currentUser: state.user.current
   }
 }
 

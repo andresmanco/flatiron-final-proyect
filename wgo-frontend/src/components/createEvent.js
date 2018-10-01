@@ -87,11 +87,8 @@ class CreateEvent extends Component{
             </Form.Field>
             : null
           }
-    </Form.Group>
-        <Form.Field>
-          <Checkbox label='I agree to the Terms and Conditions' />
-        </Form.Field>
-        <TimeInput name="closingTime" placeholder="Ending time" value={this.state.closingTime} iconPosition="left" onChange={this.handleChangeTime} />
+          </Form.Group>
+        <TimeInput name="closingTime" placeholder="Ending time" value={this.state.closingTime} label='Closing Time' iconPosition="left" onChange={this.handleChangeTime} />
       <Button type='submit'>Submit</Button>
       </Form>
     </div>

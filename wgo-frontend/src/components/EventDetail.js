@@ -11,8 +11,10 @@ class EventDetail extends Component{
   }
 
   componentDidMount=()=>{
-    if(this.props.likes.find(like=> like.guest_id === this.props.currentUser.id)){
-      this.setState({likeButton: true})
+    if(this.props.currentUser){
+      if(this.props.likes.find(like=> like.guest_id === this.props.currentUser.id)){
+        this.setState({likeButton: true})
+      }
     }
   }
 
@@ -22,13 +24,18 @@ class EventDetail extends Component{
   }
 
   handleClick=()=>{
-    if(this.state.likeButton){
-      let id = this.props.likes.find(like=> like.guest_id === this.props.currentUser.id).id
-      this.props.fetchDeleteLike(id)
-    }else{
-      this.props.fetchNewLike(this.props.currentEvent.id)
+    if(this.props.currentUser){
+      if(this.state.likeButton){
+        let id = this.props.likes.find(like=> like.guest_id === this.props.currentUser.id).id
+        this.props.fetchDeleteLike(id)
+      }else{
+        this.props.fetchNewLike(this.props.currentEvent.id)
+      }
+      this.setState({likeButton: !this.state.likeButton})
     }
-    this.setState({likeButton: !this.state.likeButton})
+    else{
+      alert('You need to Log in to like or comment on events')
+    }
   }
 
   render(){

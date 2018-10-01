@@ -5,17 +5,22 @@ import {connect} from 'react-redux'
 const EventComment = props =>{
 
   function user() {
-
     return props.users.find(user=> user.id === props.comment.guest_id)
+  }
+
+  function convertDate(){
+    let d = new Date(props.comment.created_at)
+    let newDate = [d.toString().split(' ')[0], d.toString().split(' ')[1], d.toString().split(' ')[2], d.toString().split(' ')[4]]
+    return newDate.join(' ')
   }
 
 
   return(
     <Comment>
       <Comment.Content>
-        <Comment.Author>{user().fullname}</Comment.Author>
+        <Comment.Author>{user().username}</Comment.Author>
         <Comment.Metadata>
-          <div>{props.comment.created_at}</div>
+          <div>{convertDate()}</div>
         </Comment.Metadata>
         <Comment.Text>
           {props.comment.content}
