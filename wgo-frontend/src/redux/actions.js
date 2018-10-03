@@ -117,7 +117,7 @@ export function fetchUpdateEvent(event){
 export function fetchDeleteEvent(id) {
   return function(dispatch) {
     fetch(baseUrl + '/events/' + id, {
-      method: 'PATCH',
+      method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         'Content-Type': 'application/json',
@@ -125,8 +125,7 @@ export function fetchDeleteEvent(id) {
       }
     }).then(r=> r.json())
     .then(event=> {
-      debugger
-      dispatch({type: DELETE_EVENT, id})
+      dispatch({type: DELETE_EVENT, id: event.id})
     })
   }
 }

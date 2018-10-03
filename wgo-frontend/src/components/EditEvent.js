@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react'
-import { Button, Form, Icon } from 'semantic-ui-react'
+import { Button, Form, Icon, Segment } from 'semantic-ui-react'
 import { TimeInput } from 'semantic-ui-calendar-react';
 import {fetchUpdateEvent, fetchDeleteEvent} from '../redux/actions'
 import {connect} from 'react-redux'
@@ -125,17 +125,27 @@ class EditEvent extends Component{
               <Form.TextArea onChange={this.handleChange} value={this.state.description} label='Description' name='description' placeholder='Tell us more about your the event...' />
             </Form.Field>
             <Form.Group widths='equal'>
-              <Form.Select value={this.state.eventType} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'eventType')} fluid label='Type' options={eventType} placeholder='Type' />
-              <Form.Select value={this.state.dressCode} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'dressCode')} fluid label='Dress Code' options={dressCode} placeholder='Dress Code' />
-              <Form.Select value={this.state.openTo} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'openTo')} fluid label='Who is this event for?' options={openTo} placeholder='Who is this event for?' />
-              <Form.Select value={this.state.price} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'price')} fluid label='Price' options={price} placeholder='Who is this event for?' />
+              <Segment>
+                <Form.Select value={this.state.eventType} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'eventType')} fluid label='Type' options={eventType} placeholder='Type' />
+              </Segment>
+              <Segment>
+                <Form.Select value={this.state.dressCode} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'dressCode')} fluid label='Dress Code' options={dressCode} placeholder='Dress Code' />
+              </Segment>
+              <Segment>
+                <Form.Select value={this.state.openTo} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'openTo')} fluid label='Who is this event for?' options={openTo} placeholder='Who is this event for?' />
+              </Segment>
+              <Segment>
+                <Form.Select value={this.state.price} onChange={(e, value)=>this.handleChangeComboBox(e, value, 'price')} fluid label='Price' options={price} placeholder='Who is this event for?' />
               {this.state.pay === true ?
                 <Form.Field>
                   <input value={this.state.price} onChange={this.handleChange} name='price' placeholder='Amount' />
                 </Form.Field>
                 : null
               }
+            </Segment>
+            <Segment>
               <TimeInput name="closingTime" placeholder="Ending time" value={this.state.closingTime} label='Closing Time' iconPosition="left" onChange={this.handleChangeTime} />
+            </Segment>
               <Button type='submit'>Submit</Button>
             </Form.Group>
           </Form>

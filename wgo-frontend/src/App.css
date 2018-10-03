@@ -64,3 +64,7 @@ form {
 .ui.button {
   padding: 6px 6px 6px 6px;
 }
+
+.ui.card, .ui.cards>.card {
+  width: 300px;
+}
