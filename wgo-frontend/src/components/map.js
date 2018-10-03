@@ -43,7 +43,6 @@ class MapContainer extends Component{
   geojson=()=>{
     let workingEvents = this.props.events
     if (this.props.filterEvents.length > 0 && this.props.filterEvents[0] !== 'empty'){
-
       workingEvents = this.props.filterEvents
     }
 
@@ -135,7 +134,7 @@ class MapContainer extends Component{
 
 const mapStateToPros= state=>{
   return {
-    events: state.events.all,
+    events: state.events.all.filter(event=> event.active === true),
     filterEvents: state.events.filter,
     users: state.user.all,
     currentEvent: state.events.selected

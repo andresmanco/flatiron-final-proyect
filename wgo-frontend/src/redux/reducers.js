@@ -1,7 +1,7 @@
 import {combineReducers} from 'redux';
 import {
    LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
-   CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT, USER_EVENT,
+   CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
    ADD_COMMENT, DELETE_COMMENT,
    ADD_LIKE, DELETE_LIKE
  } from './types';
@@ -31,10 +31,29 @@ const userReducer = (state= {current: null, active: [], all: []}, action)=>{
 }
 
 
-const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected:[], likesOfSelected:[], userEvent:null}, action)=>{
+const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected:[], likesOfSelected:[]}, action)=>{
   switch (action.type) {
     case CREATE_EVENT:
       return {...state, all: [...state.all, action.event]}
+
+    case UPDATE_EVENT:
+      let allE = state.all.map(event=>{
+        if(event.id === action.event.id){
+          return action.event
+        }else{
+          return event
+        }
+      })
+      return {...state, all: allE}
+
+    case DELETE_EVENT:
+    allE = state.all.map(event=>{
+      if(event.id === action.id){
+        event.active = false
+      }
+      return event
+    })
+    return {...state, all: allE}
 
     case CURRENT_EVENTS:
       return {...state, all: action.events}
@@ -51,7 +70,7 @@ const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected
 
     case ADD_COMMENT:
       let current = null
-      let allE = state.all.map(event=>{
+      allE = state.all.map(event=>{
         if(event.id === state.selected.id){
           event.comments=[...event.comments, action.comment]
           current = event
@@ -89,9 +108,6 @@ const eventReducer= (state={all:[], filter:[], selected:null, commentsOfSelected
           return event
       })
     return {...state, all: allE, selected: current, likesOfSelected: current.likes}
-
-    case USER_EVENT:
-      return {...state, userEvent: action.event}
 
     default:
       return state

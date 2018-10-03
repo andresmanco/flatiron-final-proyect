@@ -9,4 +9,14 @@ class EventsController < ApplicationController
     e = params[:event]
     render json: Event.create(host_id: my_current_user.id, title: e[:title], picture: e[:picture], description: e[:description], event_type: e[:eventType], dress_code: e[:dressCode], price: e[:price], open_to: e[:openTo], location: e[:location], closing_time: e[:closingTime])
   end
+
+  def update
+    e = params[:event]
+    Event.find(e[:id]).update(title: e[:title], picture: e[:picture], description: e[:description], event_type: e[:eventType], dress_code: e[:dressCode], price: e[:price], open_to: e[:openTo], closing_time: e[:closingTime])
+    render json: Event.find(e[:id])
+  end
+
+  def destroy
+    render json: Event.find(params[:id]).destroy
+  end
 end

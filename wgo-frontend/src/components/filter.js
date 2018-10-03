@@ -60,7 +60,7 @@ class Filter extends Component {
 }
 
 const mapStateToPros = state=>{
-  return {events: state.events.all}
+  return {events: state.events.all.filter(event=> event.active === true)}
 }
 
 export default connect(mapStateToPros, {filterEvents})(Filter)
