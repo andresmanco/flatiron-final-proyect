@@ -2,6 +2,7 @@ export const LOGIN_USER = 'LOGIN_USER'
 export const LOGOUT_USER = 'LOGOUT_USER'
 export const GET_USERS = 'GET_USERS'
 export const LOAD_USERS = 'LOAD_USERS'
+export const SELECT_USER = 'SELECT_USER'
 
 export const CREATE_EVENT = 'CREATE_EVENT'
 export const UPDATE_EVENT = 'UPDATE_EVENT'

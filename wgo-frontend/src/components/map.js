@@ -93,7 +93,6 @@ class MapContainer extends Component{
   }
 
   render(){
-
     return(
       <Fragment>
         <h4 style={{textAlign: 'center', margin: '50px 0px 20px 0px'}}>Track events all over the world in real time</h4>
@@ -117,7 +116,7 @@ class MapContainer extends Component{
               onClick={()=>this.handleClick(feature)}
             >
               <div data-set={feature} title={feature.properties.title}>
-                {feature.properties.type[0]}
+                E
               </div>
             </Marker>
           ))}

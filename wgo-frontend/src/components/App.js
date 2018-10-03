@@ -11,7 +11,7 @@ import Profile from './Profile'
 import { Menu, Segment, Sidebar, Icon } from 'semantic-ui-react'
 import {BrowserRouter, Route, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {getCurrentEvents, checkUserLoged, getActiveUsers, getAllUsers, logoutUser} from '../redux/actions'
+import {getCurrentEvents, checkUserLoged, getActiveUsers, getAllUsers, logoutUser, selectUser} from '../redux/actions'
 
 class App extends Component {
   state = { visible: false }
@@ -65,6 +65,11 @@ class App extends Component {
     }
   }
 
+  handleMyProfile=()=>{
+    this.setState({visible: false})
+    this.props.selectUser(this.props.user)
+  }
+
   componentDidMount(){
     this.props.getAllUsers()
     if(localStorage.getItem('token')){
@@ -105,7 +110,7 @@ class App extends Component {
                     Edit event
                   </Menu.Item>
                 </NavLink>
-                <NavLink onClick={()=>this.setState({visible: false})} activeClassName="ui active item" className="ui item" exact to="/my-profile">
+                <NavLink onClick={this.handleMyProfile} activeClassName="ui active item" className="ui item" exact to="/profile">
                   <Menu.Item >
                     <Icon name='user'/>
                     My Profile
@@ -142,7 +147,7 @@ class App extends Component {
                     <Fragment>
                       <Route exact path="/create-event" render={props=> <CreateEvent {...props}/>} />
                       <Route exact path="/edit-event" render={props=> <EditEvent {...props}/>} />
-                      <Route exact path="/my-profile" render={props=> <Profile {...props}/>} />
+                      <Route exact path="/profile" render={props=> <Profile {...props}/>} />
                     </Fragment>
                     :
                     <Fragment>
@@ -164,4 +169,4 @@ const mapStateToPros= state=>{
   return {user: state.user.current}
 }
 
-export default connect(mapStateToPros, {getCurrentEvents ,checkUserLoged, getActiveUsers, getAllUsers, logoutUser})(App);
+export default connect(mapStateToPros, {getCurrentEvents ,checkUserLoged, getActiveUsers, getAllUsers, logoutUser, selectUser})(App);

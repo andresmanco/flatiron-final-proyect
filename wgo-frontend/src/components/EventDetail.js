@@ -1,8 +1,9 @@
 import React, {Component, Fragment} from 'react'
-import { Image, Modal, Button, Icon, Label} from 'semantic-ui-react'
+import { Image, Modal, Button, Icon, Label, Grid } from 'semantic-ui-react'
 import {connect} from 'react-redux'
-import {unselectEvent, fetchNewLike, fetchDeleteLike} from '../redux/actions'
+import {unselectEvent, fetchNewLike, fetchDeleteLike, selectUser} from '../redux/actions'
 import CommentsContainer from './CommentsContainer'
+import {NavLink} from 'react-router-dom'
 
 class EventDetail extends Component{
   state={
@@ -12,6 +13,7 @@ class EventDetail extends Component{
 
   componentDidMount=()=>{
     if(this.props.currentUser){
+
       if(this.props.likes.find(like=> like.guest_id === this.props.currentUser.id)){
         this.setState({likeButton: true})
       }
@@ -23,7 +25,8 @@ class EventDetail extends Component{
     this.props.unselectEvent()
   }
 
-  handleClick=()=>{
+  handleClick=(e)=>{
+    e.stopPropagation()
     if(this.props.currentUser){
       if(this.state.likeButton){
         let id = this.props.likes.find(like=> like.guest_id === this.props.currentUser.id).id
@@ -38,9 +41,23 @@ class EventDetail extends Component{
     }
   }
 
-  render(){
+  handleClickUser=(e)=>{
+    e.stopPropagation()
+    this.props.selectUser(this.props.currentEvent.host)
+    this.handleClose()
+  }
 
+
+  convertDate=()=>{
+    let d = new Date(this.props.currentEvent.closing_time)
+    let newDate = [d.toString().split(' ')[0], d.toString().split(' ')[1], d.toString().split(' ')[2], d.toString().split(' ')[4]]
+    return newDate.join(' ')
+  }
+
+
+  render(){
     const {currentEvent}= this.props
+
     return(
       <Fragment>
       <Modal
@@ -50,7 +67,21 @@ class EventDetail extends Component{
       onClose={this.handleClose}
       centered={false}>
         <Modal.Header>
-          {currentEvent.title}
+          <Grid>
+            <Grid.Column width={7}>
+              <NavLink onClick={this.handleClickUser} activeClassName="ui active item" className="ui item" exact to="/profile">
+                <h2>
+                  <Icon name='user'/>
+                  {currentEvent.host.username}
+                </h2>
+              </NavLink>
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <h1>
+                {currentEvent.title}
+              </h1>
+            </Grid.Column>
+          </Grid>
         </Modal.Header>
         <Modal.Content image scrolling>
           <Image wrapped size='medium' src={currentEvent.picture} />
@@ -75,7 +106,7 @@ class EventDetail extends Component{
                 </tr>
                 <tr>
                   <td>Ending Time</td>
-                  <td>{currentEvent.closing_time}</td>
+                  <td>{this.convertDate()}</td>
                 </tr>
               </tbody>
             </table>
@@ -117,4 +148,4 @@ const mapStateToProps= state=>{
   }
 }
 
-export default connect(mapStateToProps, {unselectEvent, fetchNewLike, fetchDeleteLike})(EventDetail)
+export default connect(mapStateToProps, {unselectEvent, fetchNewLike, fetchDeleteLike, selectUser})(EventDetail)

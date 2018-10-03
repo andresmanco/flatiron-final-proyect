@@ -1,13 +1,13 @@
 import {combineReducers} from 'redux';
 import {
-   LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
+   LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS, SELECT_USER,
    CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
    ADD_COMMENT, DELETE_COMMENT,
    ADD_LIKE, DELETE_LIKE
  } from './types';
 
 
-const userReducer = (state= {current: null, active: [], all: []}, action)=>{
+const userReducer = (state= {current:null, active:[], all:[], selected:null}, action)=>{
   switch (action.type) {
     case LOGIN_USER:
       if(state.all.includes(action.user)){
@@ -24,6 +24,9 @@ const userReducer = (state= {current: null, active: [], all: []}, action)=>{
 
     case GET_USERS:
     return { ...state, all: action.users}
+
+    case SELECT_USER:
+    return { ...state, selected: action.user}
 
     default:
       return state
