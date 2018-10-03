@@ -5,6 +5,7 @@ class CreateUsers < ActiveRecord::Migration[5.2]
       t.string :username
       t.string :email
       t.string :picture
+      t.string :about
       t.string :password_digest
       t.string :location, default: 'offline'
       t.timestamps

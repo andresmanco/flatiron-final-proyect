@@ -7,15 +7,15 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-user0 = User.create(fullname: 'Andres', username: 'user0', email: 'andres@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
-user1 = User.create(fullname: 'John', username: 'user1', email: 'john@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
-user2 = User.create(fullname: 'Alvaro', username: 'user2', email: 'alvaro@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
-user3 = User.create(fullname: 'Ryan', username: 'user3', email: 'ryan@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
-user4 = User.create(fullname: 'Emily', username: 'user4', email: 'emily@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
-user5 = User.create(fullname: 'Josh', username: 'user5', email: 'josh@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
-user6 = User.create(fullname: 'Ruby', username: 'user6', email: 'ruby@gmail.com', password: 'pw')
-user7 = User.create(fullname: 'Aiyana', username: 'user7', email: 'aiyana@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
-user8 = User.create(fullname: 'Sydney', username: 'user8', email: 'sydney@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
+user0 = User.create(fullname: 'Andres', username: 'user0', about: 'Software Developer, graduated at Flatiron', email: 'andres@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp5-pdk03StzG2V7UcCbsC124NFV3kVYOxQZSBvBcq9ZMdKbCP')
+user1 = User.create(fullname: 'John', username: 'user1', about: 'Software Developer, graduated at Flatiron', email: 'john@gmail.com', password: 'pw', picture: 'http://2.bp.blogspot.com/-BwhWL5Cp7Vw/UVxgt5mruoI/AAAAAAAAG7E/txLBqOzvc5s/s1600/-1.jpg')
+user2 = User.create(fullname: 'Alvaro', username: 'user2', about: 'Software Developer, graduated at Flatiron', email: 'alvaro@gmail.com', password: 'pw', picture: 'http://2.bp.blogspot.com/-BwhWL5Cp7Vw/UVxgt5mruoI/AAAAAAAAG7E/txLBqOzvc5s/s1600/-1.jpg')
+user3 = User.create(fullname: 'Ryan', username: 'user3', about: 'Software Developer, graduated at Flatiron', email: 'ryan@gmail.com', password: 'pw', picture: 'http://2.bp.blogspot.com/-BwhWL5Cp7Vw/UVxgt5mruoI/AAAAAAAAG7E/txLBqOzvc5s/s1600/-1.jpg')
+user4 = User.create(fullname: 'Emily', username: 'user4', about: 'Software Developer, graduated at Flatiron', email: 'emily@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
+user5 = User.create(fullname: 'Josh', username: 'user5', about: 'Software Developer, graduated at Flatiron', email: 'josh@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
+user6 = User.create(fullname: 'Ruby', username: 'user6', about: 'Software Developer, graduated at Flatiron', email: 'ruby@gmail.com', password: 'pw')
+user7 = User.create(fullname: 'Aiyana', username: 'user7', about: 'Software Developer, graduated at Flatiron', email: 'aiyana@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
+user8 = User.create(fullname: 'Sydney', username: 'user8', about: 'Software Developer, graduated at Flatiron', email: 'sydney@gmail.com', password: 'pw', picture: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ8ajKbrYD-GGBhrcRsf0gGbBaow3_mE_Xm3gwlcuj4mH6EPBns')
 
 
 event0 = Event.create(host_id: user0.id, picture: 'http://coablog.ashevillenc.gov/wp-content/uploads/2017/01/Busker-horizontal.jpg', title: 'Guitar player', event_type: 'Street Performance', description: 'qwea ert sdvyd jgnfb  wcedvnt qw thre', dress_code: 'None', price: 'Donations', open_to: 'All', location: '-77.1 38.6', active: true, closing_time: "14/09/2018 12:09")

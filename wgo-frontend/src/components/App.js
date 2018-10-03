@@ -5,7 +5,9 @@ import NavBar from './Navbar'
 import MapContainer from './map'
 import Filter from './filter'
 import CreateEvent from './createEvent'
+import EditEvent from './EditEvent'
 import CreateAcc from './CreateAcc'
+import Profile from './Profile'
 import { Menu, Segment, Sidebar, Icon } from 'semantic-ui-react'
 import {BrowserRouter, Route, NavLink} from 'react-router-dom'
 import {connect} from 'react-redux'
@@ -97,6 +99,18 @@ class App extends Component {
                 <NavLink onClick={()=>this.setState({visible: false})} activeClassName="ui active item" className="ui item" exact to="/create-event">
                   <Menu.Item >Create your event</Menu.Item>
                 </NavLink>
+                <NavLink onClick={()=>this.setState({visible: false})} activeClassName="ui active item" className="ui item" exact to="/edit-event">
+                  <Menu.Item >
+                    <Icon name='edit'/>
+                    Edit event
+                  </Menu.Item>
+                </NavLink>
+                <NavLink onClick={()=>this.setState({visible: false})} activeClassName="ui active item" className="ui item" exact to="/my-profile">
+                  <Menu.Item >
+                    <Icon name='user'/>
+                    My Profile
+                  </Menu.Item>
+                </NavLink>
                 <NavLink onClick={this.clickHandler} activeClassName="ui active item" className="ui item" exact to="/">
                   <Menu.Item>
                     <Icon name='log out'/>
@@ -120,29 +134,28 @@ class App extends Component {
           </Sidebar>
           <Sidebar.Pusher dimmed={visible}>
             <Segment basic style={{minHeight: '100vh'}}>
-
-
-                <React.Fragment>
+                <Fragment>
                   <Route path='/' render={props=><NavBar {...props} handleButtonClick={this.handleButtonClick} />}/>
                   <Route exact path='/' render={props=> <MapContainer {...props} />} />
                   <Route exact path='/' render={props=> <Filter {...props} />} />
                   {this.props.user ?
-                    <Route exact path="/create-event" render={props=> <CreateEvent {...props}/>} />
+                    <Fragment>
+                      <Route exact path="/create-event" render={props=> <CreateEvent {...props}/>} />
+                      <Route exact path="/edit-event" render={props=> <EditEvent {...props}/>} />
+                      <Route exact path="/my-profile" render={props=> <Profile {...props}/>} />
+                    </Fragment>
                     :
-                    <React.Fragment>
+                    <Fragment>
                       <Route exact path='/signup' render={props=> <CreateAcc {...props} updateUserLocation={this.updateUserLocation} />} />
                       <Route exact path="/login" render={props=> <Login {...props} updateUserLocation={this.updateUserLocation} />} />
-                    </React.Fragment>
+                    </Fragment>
                   }
-                </React.Fragment>
-
-
+                </Fragment>
             </Segment>
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </div>
       </BrowserRouter>
-
     );
   }
 }

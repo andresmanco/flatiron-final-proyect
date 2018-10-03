@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(version: 2018_09_28_174259) do
     t.string "username"
     t.string "email"
     t.string "picture"
+    t.string "about"
     t.string "password_digest"
     t.string "location", default: "offline"
     t.datetime "created_at", null: false

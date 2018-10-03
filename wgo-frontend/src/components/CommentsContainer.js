@@ -17,7 +17,7 @@ class CommentsContainer extends Component{
   }
 
   handleChange= (e)=>{
-    this.handleClick()
+    // this.handleClick()
     if(this.props.currentUser){
       this.setState({
         comment: e.target.value

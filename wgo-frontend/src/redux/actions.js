@@ -1,6 +1,6 @@
 import {
   LOGOUT_USER, LOGIN_USER, LOAD_USERS, GET_USERS,
-  CREATE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT, USER_EVENT,
+  CREATE_EVENT, UPDATE_EVENT, DELETE_EVENT, CURRENT_EVENTS, EVENT_FILTER, SELECT_EVENT, UNSELECT_EVENT,
   ADD_COMMENT, DELETE_COMMENT,
   ADD_LIKE, DELETE_LIKE
  } from './types'
@@ -88,16 +88,53 @@ export function fetchNewEvent(newEvent) {
 }
 
 
+export function fetchUpdateEvent(event){
+  return function(dispatch) {
+    fetch(baseUrl + '/events/' + event.id, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        event: event
+      })
+    }).then(r=> r.json())
+    .then(event=>{
+      if(event!== undefined){
+        dispatch({type: UPDATE_EVENT, event})
+      }
+    })
+  }
+}
+
+
+export function fetchDeleteEvent(id) {
+  return function(dispatch) {
+    fetch(baseUrl + '/events/' + id, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      }
+    }).then(r=> r.json())
+    .then(event=> {
+      debugger
+      dispatch({type: DELETE_EVENT, id})
+    })
+  }
+}
+
+
 // GET ALL THE EVENTS AND FILTER JUST THE ONES ACTIVE!
 export function getCurrentEvents(){
   return function(dispatch){
     fetch(baseUrl + '/events')
     .then(r=> r.json())
     .then(allEvents=>{
-      let currentEvents = []
-
-      currentEvents = allEvents.filter(event=> event.active === true)
-      dispatch({type: CURRENT_EVENTS, events: currentEvents})
+      dispatch({type: CURRENT_EVENTS, events: allEvents})
     })
   }
 }
